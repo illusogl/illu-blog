@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#070c18"/>
+      <stop offset="0.5" stop-color="#0e1b33"/>
+      <stop offset="1" stop-color="#0b2b3a"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0.45" stop-color="#05080f" stop-opacity="0"/>
+      <stop offset="1" stop-color="#05080f" stop-opacity="0.55"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowC" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#818cf8" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#818cf8" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#9db4d0" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.2" fill="#9db4d0" fill-opacity="0.16"/>
+    </pattern>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+  <rect width="1920" height="1080" fill="url(#dots)"/>
+
+  <circle cx="1580" cy="220" r="520" fill="url(#glowA)"/>
+  <circle cx="300" cy="880" r="460" fill="url(#glowB)"/>
+  <circle cx="980" cy="520" r="380" fill="url(#glowC)"/>
+
+  <!-- 节点图 -->
+  <g stroke="#7dd3fc" stroke-opacity="0.26" stroke-width="1.5" fill="none">
+    <path d="M240 700 L420 560 L610 640 L780 470 L980 560 L1160 400 L1380 500 L1600 360"/>
+    <path d="M420 560 L380 380 L560 300"/>
+    <path d="M780 470 L740 280 L920 200"/>
+    <path d="M1160 400 L1120 230 L1300 160"/>
+    <path d="M610 640 L560 820 L760 900"/>
+    <path d="M980 560 L1040 760 L1240 840"/>
+  </g>
+  <g fill="#7dd3fc" fill-opacity="0.62">
+    <circle cx="240" cy="700" r="5"/>
+    <circle cx="420" cy="560" r="7"/>
+    <circle cx="610" cy="640" r="5"/>
+    <circle cx="780" cy="470" r="7"/>
+    <circle cx="980" cy="560" r="6"/>
+    <circle cx="1160" cy="400" r="7"/>
+    <circle cx="1380" cy="500" r="5"/>
+    <circle cx="1600" cy="360" r="6"/>
+    <circle cx="380" cy="380" r="4"/>
+    <circle cx="560" cy="300" r="4"/>
+    <circle cx="740" cy="280" r="4"/>
+    <circle cx="920" cy="200" r="4"/>
+    <circle cx="1120" cy="230" r="4"/>
+    <circle cx="1300" cy="160" r="4"/>
+    <circle cx="560" cy="820" r="4"/>
+    <circle cx="760" cy="900" r="4"/>
+    <circle cx="1040" cy="760" r="4"/>
+    <circle cx="1240" cy="840" r="4"/>
+  </g>
+
+  <!-- 低透明度括号 -->
+  <g fill="none" stroke="#e2e8f0" stroke-opacity="0.055" stroke-width="14" stroke-linecap="round">
+    <path d="M300 260 C220 260 220 340 220 420 C220 500 160 540 160 540 C160 540 220 580 220 660 C220 740 220 820 300 820"/>
+    <path d="M1620 260 C1700 260 1700 340 1700 420 C1700 500 1760 540 1760 540 C1760 540 1700 580 1700 660 C1700 740 1700 820 1620 820"/>
+  </g>
+
+  <rect width="1920" height="1080" fill="url(#fade)"/>
+</svg>

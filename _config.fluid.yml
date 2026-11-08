@@ -1,0 +1,176 @@
+# ==========================================================
+# Fluid 主题覆盖配置
+# 主题默认配置：node_modules/hexo-theme-fluid/_config.yml
+# ==========================================================
+
+favicon: /img/favicon.svg
+apple_touch_icon: /img/favicon.svg
+tab_title_separator: " · "
+
+# 代码块
+code:
+  copy_btn: true
+  language:
+    enable: true
+    default: "TEXT"
+  highlight:
+    enable: true
+    line_number: true
+    lib: "highlightjs"
+
+# 小功能
+fun_features:
+  typing:
+    enable: true
+    typeSpeed: 80
+    cursorChar: "_"
+    loop: false
+    scope: [home]
+  anchorjs:
+    enable: true
+    element: "h2,h3,h4"
+    placement: left
+    visible: hover
+    icon: "#"
+  progressbar:
+    enable: true
+    height_px: 3
+    color: "#38bdf8"
+
+# 暗色模式
+dark_mode:
+  enable: true
+  default: auto
+
+# 配色
+color:
+  body_bg_color: "#f3f5f9"
+  body_bg_color_dark: "#12161d"
+  navbar_bg_color: "#0f172a"
+  navbar_bg_color_dark: "#0a0f18"
+  post_link_color: "#2563eb"
+  post_link_color_dark: "#60a5fa"
+  link_hover_color: "#0ea5e9"
+  link_hover_color_dark: "#38bdf8"
+
+# 导航栏
+navbar:
+  blog_title: "glll0"
+  ground_glass:
+    enable: true
+    px: 8
+    alpha: 0.82
+  menu:
+    - { key: "home", link: "/", icon: "iconfont icon-home-fill" }
+    - { key: "archive", link: "/archives/", icon: "iconfont icon-archive-fill" }
+    - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill" }
+    - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
+    - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
+
+# 本地搜索（主题自带生成器）
+search:
+  enable: true
+  path: /local-search.xml
+  generate_path: /local-search.xml
+  field: post
+  content: true
+
+# 头图
+banner:
+  random_img: false
+  parallax: true
+  width_height_ratio: 1.0
+
+scroll_down_arrow:
+  enable: true
+  banner_height_limit: 80
+  scroll_after_turning_page: true
+
+scroll_top_arrow:
+  enable: true
+
+# 页脚
+footer:
+  content: '<span>© 2026 glll0</span> <i class="iconfont icon-love"></i> <span>Powered by Hexo · Fluid</span>'
+  statistics:
+    enable: false
+
+# 首页
+index:
+  banner_img: /img/banner.svg
+  banner_img_height: 100
+  banner_mask_alpha: 0.3
+  slogan:
+    enable: true
+    text: "illu"
+  auto_excerpt:
+    enable: true
+  post_url_target: _self
+  post_meta:
+    date: true
+    category: true
+    tag: true
+
+# 文章页
+post:
+  banner_img: /img/banner.svg
+  banner_img_height: 62
+  banner_mask_alpha: 0.45
+  meta:
+    author:
+      enable: false
+    date:
+      enable: true
+      format: "LL"
+    wordcount:
+      enable: true
+    min2read:
+      enable: true
+      awl: 2
+      wpm: 300
+  updated:
+    enable: false
+  toc:
+    enable: true
+    expand_all: true
+    placement: right
+  category_bar:
+    enable: false
+  copyright:
+    enable: true
+    license: 'BY-NC-SA'
+    author:
+      enable: true
+    post_date:
+      enable: true
+    update_date:
+      enable: false
+  prev_next:
+    enable: true
+  image_zoom:
+    enable: true
+
+# 关于页
+about:
+  enable: true
+  banner_img: /img/banner.svg
+  banner_img_height: 55
+  banner_mask_alpha: 0.45
+  avatar: /img/avatar.svg
+  name: "glll0"
+  icons: []
+
+# 普通页面
+page:
+  banner_img: /img/banner.svg
+  banner_img_height: 50
+  banner_mask_alpha: 0.45
+
+# 404
+page404:
+  enable: true
+  banner_img: /img/banner.svg
+  banner_img_height: 70
+
+# 自定义样式
+custom_css: /css/custom.css

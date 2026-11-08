@@ -1,0 +1,38 @@
+/* 细节微调 */
+
+::selection {
+  background: rgba(56, 189, 248, 0.28);
+}
+
+#board {
+  border-radius: 16px;
+}
+
+.markdown-body pre {
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+}
+
+.markdown-body table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.markdown-body table th {
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.navbar {
+  backdrop-filter: saturate(160%) blur(10px);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+}
+
+/* 首页文章卡片轻微上浮 */
+.index-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.index-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+}

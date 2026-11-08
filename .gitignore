@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Hexo generated files
+public/
+db.json
+.deploy_git/
+
+# Python cache
+tools/__pycache__/
+*.pyc
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
