@@ -1,0 +1,157 @@
+// ============================================================
+// 线性基（XOR Basis）常用函数
+//
+// 背景：
+//   只考虑异或运算时，把一个数看成 60 位（或 64 位）的 0/1 向量，
+//   XOR 就是“模 2 加法”。数组所有子集异或出来的数，构成一个
+//   线性空间；线性基就是这个空间的一组基。
+//
+// 性质：
+//   1. 基的大小不超过位数（本题 60），每个二进制位最多一个主元；
+//   2. 任意子集异或值，都能由基中若干个数异或得到；
+//   3. 插入、求最大异或都是 O(60)。
+//
+// 存储约定：
+//   basis[b] != 0 时，它的最高位的 1 一定在第 b 位。
+//   例如 basis[5] = 101101，最高位是 bit5；basis[3] = 0 表示
+//   bit3 还没有主元。
+//
+// 说明：本文件是函数模板，没有 main，不能单独链接成 exe；
+//       文件末尾有一段注释掉的使用示例，需要时复制到 main 里。
+// ============================================================
+
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+const int LB_LOG = 60;      // 本题 a[i] < 2^60，所以用 bit 0..59
+ll basis[LB_LOG];           // 全局线性基
+
+// 清空线性基。多组测试数据时每组都要调用一次。
+// memset 的详细用法见文件末尾的“知识点 2”。
+void basisInit()
+{
+    memset(basis, 0, sizeof(basis));
+}
+
+// 插入一个数 x。
+// 返回值：true 表示 x 增加了空间的维数；false 表示 x 已经能被
+//         当前基异或表示（线性相关，丢掉即可）。
+bool insertBasis(ll x)
+{
+    for (int b = LB_LOG - 1; b >= 0; b--)
+    {
+        if (((x >> b) & 1) == 0)
+        {
+            continue;               // 第 b 位是 0，不用管
+        }
+        if (basis[b] == 0)
+        {
+            basis[b] = x;           // 第 b 位还没有主元，x 独立
+            return true;
+        }
+        // basis[b] 的最高位也是 b，异或后第 b 位变 0，
+        // 更高的位不受影响，继续往下消。
+        x ^= basis[b];
+    }
+    return false;                   // x 被消成 0，不独立
+}
+// 对数组 a 建立线性基（会先清空）。
+void buildBasis(const vector<ll>& a)
+{
+    basisInit();
+    for (ll x : a)
+    {
+        insertBasis(x);
+    }
+}
+// 数组所有子集异或值中的最大值。
+// 注意：不是 max(a[i])，而是“任选若干个数异或”能得到的最大值。
+// 从高位往低位贪心：basis[b] 的最高位是 b，异或它只会改变
+// 第 b 位及更低位，不会影响更高位。所以只要异或后变大就异或。
+ll basisMaxXor()
+{
+    ll res = 0;
+    for (int b = LB_LOG - 1; b >= 0; b--)
+    {
+        if (basis[b] != 0 && (res ^ basis[b]) > res)
+        {
+            res ^= basis[b];
+        }
+    }
+    return res;
+}
+
+// 判断 x 能否被数组的某个子集异或出来。
+// 和插入的过程一样，从高到低消；消不掉说明表示不了。
+bool basisCanRepresent(ll x)
+{
+    for (int b = LB_LOG - 1; b >= 0; b--)
+    {
+        if (((x >> b) & 1) == 0)
+        {
+            continue;
+        }
+        if (basis[b] == 0)
+        {
+            return false;
+        }
+        x ^= basis[b];
+    }
+    return true;
+}
+
+/* ============================================================
+   在“Noir 分组”一题里的用法（两组情况）：
+   ------------------------------------------------------------
+   设总异或 X = a[0] ^ a[1] ^ ... ^ a[n-1]。
+   一组的价值是 X；两组的价值是
+       s & (X ^ s) = s & ~X
+   其中 s 是其中一组内所有数的异或。
+   因为 (子集异或) & ~X 等于“每个数先 & ~X 再异或”，所以：
+       for (ll x : a) insertBasis(x & ~X);
+       ll ans = basisMaxXor();
+   就是两组情况的最大价值。
+
+   完整流程：
+       ll X = 0;
+       for (ll x : a) X ^= x;
+
+       // 最高位 1 的个数为奇数：一组最优
+       int top = 0;
+       for (ll x : a) top = max(top, highestBit(x));
+       int cnt = 0;
+       for (ll x : a) cnt += (x >> top) & 1;
+       if (cnt & 1)
+       {
+           cout << X << "\n";
+           return;
+       }
+
+       // 最高位 1 的个数为偶数：两组最优
+       basisInit();
+       for (ll x : a) insertBasis(x & ~X);
+       cout << basisMaxXor() << "\n";
+   ============================================================ */
+
+
+/* ---------------- 使用示例（复制到 main 里测试） ----------------
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int n;
+    cin >> n;
+    vector<ll> a(n);
+    for (ll& x : a) cin >> x;
+
+    buildBasis(a);                     // 对数组建线性基
+    cout << basisMaxXor() << "\n";     // 最大子集异或
+
+    // 判断某个数能否由子集异或得到
+    // cout << basisCanRepresent(123) << "\n";
+
+    return 0;
+}
+--------------------------------------------------------------- */

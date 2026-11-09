@@ -12,7 +12,7 @@
 只处理 front-matter 里带 XMind 标签的文章，不改原文措辞。
 
 用法：
-  python polish_notes.py --dry-run source/_posts/数据结构.md
+  python polish_notes.py --dry-run source/_posts/misc/数据结构.md
   python polish_notes.py
 """
 
@@ -21,6 +21,7 @@ import html
 import os
 import re
 import sys
+from pathlib import Path
 
 from xmind2md import detect_lang, looks_like_code
 
@@ -344,11 +345,7 @@ def main():
     if args.files:
         files = args.files
     else:
-        files = [
-            os.path.join(POSTS_DIR, name)
-            for name in sorted(os.listdir(POSTS_DIR))
-            if name.endswith(".md")
-        ]
+        files = [str(path) for path in sorted(Path(POSTS_DIR).rglob("*.md"))]
 
     count = 0
     for path in files:

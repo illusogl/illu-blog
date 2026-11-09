@@ -1,0 +1,1 @@
+{"name":"Local: bf","url":"d:\\CShapeProject\\ACM\\对拍\\bf.cpp","tests":[{"id":1792828260759,"input":"5 5\n1 5 5 4 4","output":""},{"id":1792830513100,"input":"5 10\n9 8 2 5 9","output":""},{"id":1792831211438,"input":"5 10\n7 9 8 8 1","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\CShapeProject\\ACM\\对拍\\bf.cpp","group":"local","local":true}

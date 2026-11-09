@@ -1,1 +1,9 @@
 node node_modules\hexo-cli\bin\hexo server
+更新github
+cd D:\myBlog
+git add .
+git commit -m "更新文章"
+git push
+
+网站
+https://illusogl.github.io/illu-blog
