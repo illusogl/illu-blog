@@ -1,5 +1,5 @@
 ---
-title: "C# 语法补充：readonly"
+title: "C#补充之readonly"
 date: 2026-11-08 18:00:00
 categories:
   - "C#"

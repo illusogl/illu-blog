@@ -1,6 +1,6 @@
 ---
 title: "KMP"
-date: 2026-11-09 20:18:00
+date: 2026-05-14 21:18:00
 categories:
   - "算法"
 tags:
@@ -9,81 +9,88 @@ tags:
   - "C++"
 ---
 
-KMP 先对模式串求前缀函数 nxt：nxt[i] 是 s[0..i] 的最长相等真前缀和真后缀的长度。匹配时文本指针只往前走，失配了就让模式串指针退回 nxt[index-1]，不用回到开头。匹配成功后同样回退，可以继续找下一次出现。
+KMP 先对模式串 p 求前缀函数 nxt：nxt[i] 是 p[0..i] 的最长相等真前缀和真后缀的长度。匹配时文本指针只往前走，失配了就让模式串指针退回 nxt[index-1]，不用回到开头。匹配成功后同样回退，可以继续找下一次出现。
 
 <!-- more -->
 
 ```cpp
-// GetNeed：前缀函数（next 数组）—— 背板模板，一个字都别改
-//
-// nxt[i] = s[0..i] 的最长“真前缀 == 真后缀”的长度
-// 含义：当 s[j] 失配时，j 退到 nxt[j-1] 继续比，文本指针永不回退
-//
-// 例：s = [1,1,2]   -> nxt = [0,1,0]
-//     s = [1,2,1,2] -> nxt = [0,0,1,2]
-// 常考：最小循环节长度 = n - nxt[n-1]（n % 该长度 == 0 时整串是循环节拼的）
-vector<int> GetNeed(vector<int>& s)
+#include <bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+
+// 前缀函数：nxt[i] = p[0..i] 的最长相等前后缀长度
+vector<int> prefixFunction(const vector<int>& p)
 {
-    int n = s.size();
-    vector<int> nxt(n, 0);        // nxt[0] 恒为 0
-    int j = 0;                    // j = 已匹配的前后缀长度，下一步比较 s[j]
-    for (int i = 1; i < n; i++)   // 从 1 开始
+    int m = (int)p.size();
+    vector<int> nxt(m, 0);
+    for (int i = 1, j = 0; i < m; i++)
     {
-        // 失配：沿“前缀链”回退，直到能接上或退到 0
-        while (s[j] != s[i] && j != 0)
-            j = nxt[j - 1];       // ★ 唯一要背的一句：必须是 nxt[j-1]（写 s[j-1] 会死循环）
-        if (s[j] == s[i]) j++;    // 接上了，长度 +1
-        nxt[i] = j;               // 记录
+        // 失配：沿前缀链回退
+        while (j > 0 && p[i] != p[j]) j = nxt[j - 1];
+        if (p[i] == p[j]) j++; // 接上了，匹配长度 +1
+        nxt[i] = j; // nxt[i] = p[0..i] 的最长相等前后缀长度
     }
     return nxt;
 }
 
-// ============================================================
-// KMP：比赛时只改这个函数的“匹配成功”分支
-// 版本 1：返回第一次出现的【结尾下标】，没有返回 -1
-// 想要【起始下标】-> return i - m + 1;
-// ============================================================
-int KMP_first(vector<int>& a, vector<int>& b)
+// 返回第一次出现的起始下标，找不到返回 -1
+int kmpFirst(const vector<int>& s, const vector<int>& p)
 {
-    if (b.empty()) return -1;               // 边界：空模式串，按题目约定
-    vector<int> nxt = GetNeed(b);           // 前缀表只跟模式串有关，原样调用
-    int n = a.size(), m = b.size();
-    int index = 0;                          // 当前已匹配的模式串长度
-    for (int i = 0; i < n; i++)             // 文本指针 i 只前进不回退，O(n+m)
+    if (p.empty()) return -1;
+    vector<int> nxt = prefixFunction(p);
+    int m = (int)p.size();
+    for (int i = 0, j = 0; i < (int)s.size(); i++)
     {
-        while (a[i] != b[index] && index > 0)
-            index = nxt[index - 1];         // 失配：模式串指针按前缀表回退
-        if (a[i] == b[index]) index++;      // 匹配：长度 +1
-        if (index == m)                     // ★★ 匹配成功：改这里！★★
-        {
-            return i;                       // 要起始位置就写 return i - m + 1;
-        }
+        while (j > 0 && s[i] != p[j]) j = nxt[j - 1];
+        if (s[i] == p[j]) j++;
+        if (j == m) return i - m + 1; // 第一次匹配成功
     }
-    return -1;                              // 没找到
+    return -1;
 }
-int KMP(vector<int> &a,vector<int> &b)
+
+// 统计出现次数，允许重叠
+int kmpCount(const vector<int>& s, const vector<int>& p)
 {
-    vector<int> next = GetNeed(b);
-    int n = a.size(); int m = b.size();
-    int index = 0;
-    int ans = 0;
-    for(int i = 0; i < n; i++)
+    if (p.empty()) return 0;
+    vector<int> nxt = prefixFunction(p);
+    int m = (int)p.size(), cnt = 0;
+    for (int i = 0, j = 0; i < (int)s.size(); i++)
     {
-        while(a[i] != b[index] && index > 0)
+        while (j > 0 && s[i] != p[j]) j = nxt[j - 1];
+        if (s[i] == p[j]) j++;
+        if (j == m)
         {
-            index = next[index - 1];
-        }
-        if(a[i] == b[index])
-        {
-            index++;
-        }
-        if(index == m)
-        {
-            ans++;
-            index = next[index - 1];
+            cnt++;
+            // 继续找下一次出现，允许重叠
+            j = nxt[j - 1];
         }
     }
-    return ans;
+    return cnt;
+}
+
+void solve()
+{
+    int n, m;
+    cin >> n >> m;
+
+    vector<int> s(n), p(m);
+    for (int& x : s) cin >> x;
+    for (int& x : p) cin >> x;
+
+    cout << kmpFirst(s, p) << '\n';
+    cout << kmpCount(s, p) << '\n';
+}
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int T = 1;
+    // cin >> T;
+    while (T--) solve();
+    return 0;
 }
 ```
 
